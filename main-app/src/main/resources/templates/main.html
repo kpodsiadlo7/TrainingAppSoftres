@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Training Application</title>
+    <script th:include="fragments/header.html :: headerScript" th:remove="tag"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
+</head>
+<script type="text/javascript">
+    $(function () {
+        $("#backBtn").click(function () {
+            window.location.href = '/logout';
+        });
+    });
+    $(function () {
+        if ($("#errorMsg").text() != "") {
+            $("#errorMsg").removeClass("d-none");
+        }
+    });
+    $(function () {
+        $("tr[id*='training-']").click(function () {
+            var trainingId = $(this).prop('id').split('-')[1];
+
+            window.location.href = '/training/'+trainingId;
+        });
+    });
+</script>
+<body>
+<div class="card">
+    <div class="card-header" style="margin-bottom: 1em">
+        <div class="row">
+            <div class="h2 col-11">
+                Training Application
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="row gx-lg-0">
+            <div class="col-2">
+                <div class="d-grid gap-2">
+                    <div class="card-header" style="margin-left: 2em;">
+                        <h2 style="margin-left: 2.5em; margin-bottom: 0.3em">Menu</h2>
+                    </div>
+                    <div class="d-grid gap-1">
+                        <a href="/training" class="btn btn-outline-dark" style="margin-left: 2em; margin-top: 2em">Add new training</a><br>
+                        <a id="backBtn" class="btn btn-outline-danger" style="margin-left: 2em; margin-top: 14em">Logout</a><br>
+                    </div>
+                </div>
+            </div>
+            <div class="col-10">
+                <div id="errorMsg" class="alert alert-danger d-none" role="alert" th:text="${error}"></div>
+                <div class="p1" style="margin-left: 3em">
+                    <form>
+                        <div class="h2" style="margin-left: 0.6em;">All your trainings</div>
+                        <div data-bs-spy="scroll"data-bs-smooth-scroll="true" class="scrollspy-example" style="height: 30em" tabindex="1">
+                            <div class="card-body" style="margin-right: 3.2em">
+                                <table class="table table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">Date</th>
+                                        <th scope="col">Kilometers</th>
+                                        <th scope="col">Time</th>
+                                        <th scope="col">Description</th>
+                                        <th scope="col">Kcal</th>
+                                        <th scope="col">Avg speed</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="training : ${trainingsDto}" style="cursor: pointer" th:id="|training-${training.id}|">
+                                        <td th:text="${training.trainingDate}">Date</td>
+                                        <td th:text="${training.kilometers}">Kilometers</td>
+                                        <td th:text="${training.trainingTime}">Kilometers</td>
+                                        <td th:text="${training.description}">Time</td>
+                                        <td th:text="${training.kcal}">Kcal</td>
+                                        <td th:text="|${training.avgSpeed} km/h|">Avg speed</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

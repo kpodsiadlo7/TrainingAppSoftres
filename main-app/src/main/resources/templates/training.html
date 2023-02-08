@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Training Application</title>
+    <script th:include="fragments/header.html :: headerScript" th:remove="tag"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>
+</head>
+<script type="text/javascript">
+    $(function () {
+        $("#backBtn").click(function () {
+            window.location.href = '/main';
+        });
+    });
+    $(function () {
+        if ($("#errorMsg").text() != "") {
+            $("#errorMsg").removeClass("d-none");
+        }
+    });
+</script>
+<body>
+<div class="card">
+    <div class="card-header" style="margin-bottom: 1em">
+        <div class="row">
+            <div class="h2 col-11">
+                Training Application
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="row gx-lg-0">
+            <div class="col-2">
+                <div class="d-grid gap-2">
+                    <div class="card-header" style="margin-left: 2em;">
+                        <h2 style="margin-left: 2.5em; margin-bottom: 0.3em">Menu</h2>
+                    </div>
+                    <div class="d-grid gap-1">
+                        <a id="backBtn" class="btn btn-outline-danger"
+                           style="margin-left: 2em; margin-top: 18em">Back</a><br>
+                    </div>
+                </div>
+            </div>
+            <div class="col-10">
+                <div id="errorMsg" class="alert alert-danger d-none" role="alert" th:text="${error}"></div>
+                <div class="p1" style="margin-left: 3em">
+                    <form action="" method="post">
+                        <div class="form-row" style="margin-left: 0.3em">
+                            <div class="form-group col-md-1">
+                                <label for="hour">Hour</label>
+                                <input type="number" class="form-control" th:field="${trainingDto.hours}"
+                                       placeholder="hh">
+                            </div>
+                            <div class="form-group col-md-1">
+                                <label for="minutes">Minutes</label>
+                                <input type="number" class="form-control" max="60" th:field="${trainingDto.minutes}"
+                                       placeholder="mm">
+                            </div>
+                            <div class="form-group col-md-1">
+                                <label for="seconds">Seconds</label>
+                                <input type="number" class="form-control" max="60" th:field="${trainingDto.seconds}"
+                                       placeholder="ss">
+                            </div>
+                            <div class="form-group col-md-1">
+                                <label for="Kcal">Kcal</label>
+                                <input type="number" class="form-control" th:field="${trainingDto.kcal}"
+                                       placeholder="0">
+                            </div>
+                            <div class="form-group col-md-1">
+                                <label for="Kilometers">Kilometers</label>
+                                <input type="number" class="form-control" th:field="${trainingDto.kilometers}"
+                                       placeholder="0">
+                            </div>
+                        </div>
+                        <div class="form-group col-md-8">
+                            <label for="Description">Description</label>
+                            <input type="text" class="form-control" th:field="${trainingDto.description}"
+                                   style="height: 5em" placeholder="abc..">
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label>Training date</label>
+                            <input type="date" name="date" th:field="${trainingDto.trainingDate}"
+                                   class="form-control" style="cursor: pointer" required max=""/>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
